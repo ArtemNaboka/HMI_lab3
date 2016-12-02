@@ -18,16 +18,17 @@ namespace Lab3_HMI.Controllers
             _db = db;
         }
 
-        public IActionResult Index(string searchString = null, int sortOrder = 0, int sortNum = 0, string[] boxFilter = null,
-                                    bool? isAdded = false, bool? isEdit = false)
+        public IActionResult Index(string searchString = null, int sortOrder = 0, int sortNum = 0,
+            string[] boxFilter = null,
+            bool? isAdded = false, bool? isEdit = false)
         {
             ViewBag.IsAdded = isAdded;
             ViewBag.IsEdit = isEdit;
 
             var listToView = _db.Flights.ToList();
-            if(searchString != null)
+            if (searchString != null)
             {
-                if(searchString.Trim().ToLower() == "turkishes")
+                if (searchString.Trim().ToLower() == "turkishes")
                 {
                     ViewBag.IsInvalid = true;
                     return View(null);
@@ -39,15 +40,16 @@ namespace Lab3_HMI.Controllers
                 }
                 else
                 {
-                    listToView = listToView.Where(f => f.CompanyName.Trim().ToLower().Contains(searchString.Trim().ToLower()))
-                                                .ToList();
+                    listToView =
+                        listToView.Where(f => f.CompanyName.Trim().ToLower().Contains(searchString.Trim().ToLower()))
+                            .ToList();
                 }
                 ViewBag.SearchString = searchString;
             }
 
-            if(sortOrder == 0)
+            if (sortOrder == 0)
             {
-                if(sortNum != 0)
+                if (sortNum != 0)
                 {
                     switch (sortNum)
                     {
@@ -65,23 +67,20 @@ namespace Lab3_HMI.Controllers
                             break;
                     }
                     ViewBag.SortNum = sortNum;
-                }           
+                }
             }
-
-
-            if(boxFilter != null && boxFilter.Length != 0)
-            {
+            if (boxFilter != null && boxFilter.Length != 0)
+                           {
                 listToView = listToView.Where(f => boxFilter.Contains(f.AircraftType)).ToList();
-                List<int> list = new List<int>();
-                if (boxFilter.Contains("Пассажирский"))
+                List < int > list = new List<int>();
+                                if (boxFilter.Contains("Пассажирский"))
                     list.Add(1);
-                if (boxFilter.Contains("Грузовой"))
+                                if (boxFilter.Contains("Грузовой"))
                     list.Add(2);
                 ViewBag.Checked = list.ToArray();
-            }
-
-
-            return View(listToView);
+                            }
+           
+                       return View(listToView);
         }
 
         public IActionResult PassengersOfFlight(int flightId)
@@ -215,7 +214,7 @@ namespace Lab3_HMI.Controllers
             {
                 _db.Flights.Add(flight);
                 _db.SaveChanges();
-                return RedirectToAction(nameof(Index), new { isAdded= true });
+                return RedirectToAction(nameof(Index), new { isAdded = true });
             }
             return View(flight);
         }
@@ -281,56 +280,29 @@ namespace Lab3_HMI.Controllers
         [HttpGet]
         public IActionResult FutureFlights()
         {
-            var currentDateTime = DateTime.Now;
 
-            var model = new SearchBySurnameViewModel { Flights = new List<Flight>() };
+            var model = _db.Flights.Where(f => f.DateOfStart > DateTime.Now)
+                                    .ToList();
 
-            foreach (var flight in _db.Flights)
-            {
-                var i = DateTime.Compare(flight.DateOfStart, currentDateTime);
-                if (i > 0)
-                {
-                    model.Flights.Add(flight);
-                }
-            }
             return View(model);
         }
 
         [HttpGet]
         public IActionResult CurrentFlights()
         {
-            var currentDateTime = DateTime.Now;
 
-            var model = new SearchBySurnameViewModel { Flights = new List<Flight>() };
+            var model = _db.Flights.Where(f => f.DateOfStart < DateTime.Now && f.DateOfFinish > DateTime.Now)
+                                    .ToList();
 
-            foreach (var flight in _db.Flights)
-            {
-                var i = DateTime.Compare(flight.DateOfStart, currentDateTime);
-                var j = DateTime.Compare(flight.DateOfFinish, currentDateTime);
-                if (i <= 0  && j >= 0)
-                {
-                    model.Flights.Add(flight);
-                }
-            }
             return View(model);
         }
 
         [HttpGet]
         public IActionResult PastFlights()
         {
-            var currentDateTime = DateTime.Now;
 
-            var model = new SearchBySurnameViewModel { Flights = new List<Flight>() };
-            
-            foreach (var flight in _db.Flights)
-            {
-                var i = DateTime.Compare(flight.DateOfFinish, currentDateTime);
-
-                if (i < 0)
-                {
-                    model.Flights.Add(flight);
-                }
-            }
+            var model = _db.Flights.Where(f => f.DateOfFinish < DateTime.Now)
+                                            .ToList();
             return View(model);
         }
 
@@ -385,5 +357,7 @@ namespace Lab3_HMI.Controllers
         {
             return View();
         }
+
+        public IActionResult Directory() => View();
     }
 }

@@ -1,16 +1,16 @@
 ﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model SearchBySurnameViewModel
+@model List<Flight>
 @{
-    ViewData["Title"] = "Будущие рейсы";
+    ViewData["Title"] = "Прибывшие рейсы";
 }
 
-<h3>Список прошлых рейсов</h3>
+<h3>Список прибывших рейсов</h3>
 
 <form asp-controller="Home" asp-action="SearchBySurname" method="post" role="search">
     <div class="input-group">
         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
         <div class="input-group">
-            <input type="text" asp-for="SurnameToSearch" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-default">Submit</button>
             </span>
@@ -19,9 +19,8 @@
 </form>
 
 <div>
-    @if (Model.Flights != null && Model.Flights.Count != 0)
+    @if (Model != null && Model.Count != 0)
     {
-        var count = 1;
         <table>
             <tr>
                 <td><b>№ рейса</b></td>
@@ -33,10 +32,10 @@
                 <td><b>Точка прибытия</b></td>
                 <td><b>Время прибытия</b></td>
             </tr>
-            @foreach (var flight in Model.Flights)
+            @foreach (var flight in Model)
             {
                 <tr>
-                    <td>@count.</td>
+                    <td>@flight.Id.</td>
                     <td>@flight.CompanyName</td>
                     <td>@flight.AircraftType</td>
                     <td>@flight.DateOfStart</td>
@@ -50,7 +49,6 @@
                         <a asp-action="DeleteFlight" asp-route-flightId="@flight.Id" class="glyphicon glyphicon-remove" title="Удалить" style="color:red;"></a>
                     </td>
                 </tr>
-                count++;
             }
         </table>
     }

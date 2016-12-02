@@ -6,8 +6,6 @@
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-
     <link rel="stylesheet" href="~/css/table.css" />
     <link rel="stylesheet" href="~/css/hints.css" />
     <link rel="stylesheet" href="~/css/search.css" />
@@ -28,9 +26,12 @@ else if (ViewBag.IsEdit)
     </div>
 }
 
-<h3>База данных рейсов</h3>
-<br />
 <div class="container">
+    <br />
+
+    <h2>
+        <center>База данных рейсов</center>
+    </h2> <br />
     <div class="row">
         <div class="col-md-12">
             <div class="input-group" id="adv-search">
@@ -47,6 +48,7 @@ else if (ViewBag.IsEdit)
                                     <div class="form-group">
                                         <label for="filter">Сортировка</label>
                                         <select class="form-control" name="sortOrder">
+
                                             <option value="0">По возростанию</option>
                                             <option value="1">По убыванию</option>
                                         </select>
@@ -65,9 +67,11 @@ else if (ViewBag.IsEdit)
                                             <p>Тип самолета</p>
                                             <div class="checkbox-inline">
                                                 <input flag="1" type="checkbox" value="Пассажирский" name="boxFilter" /> Пассажирский
+
                                             </div>
                                             <div class="checkbox-inline">
                                                 <input flag="2" type="checkbox" value="Грузовой" name="boxFilter" /> Грузовой
+
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +80,7 @@ else if (ViewBag.IsEdit)
                                         <label for="contain">Поиск по номеру багажа</label>
                                         <input class="form-control" type="text" />
                                     </div>
-                                   <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 </form>
                             </div>
                         </div>
@@ -87,8 +91,8 @@ else if (ViewBag.IsEdit)
         </div>
     </div>
 </div>
-<label id="errorSearch"></label>
 
+<label id="errorSearch"></label>
 <div>
     <a asp-action="AddFlight" class="btn btn-success" style="margin-top: 30px; margin-left:20px;">
         <span class="glyphicon glyphicon-plus"></span>  Добавить рейс
@@ -125,7 +129,7 @@ else if (ViewBag.IsEdit)
                     <td>
                         <a class="glyphicon glyphicon-user tool_tip" asp-action="PassengersOfFlight" asp-route-flightId="@flight.Id" style="color:teal;">
                             <span class="custom info">
-                                <img src="~/images/Info.png" alt="Информация" style="margin-left:-150px;" height="48" width="48" />
+                                <img src="~/images/Info.png" alt="Информация" style="margin-left:-150px" height="48" width="48" />
                                 <em>Информация</em>
                                 Просмотр информации о пассажирах, багаж которых находится в данном рейсе
                             </span>
@@ -136,13 +140,16 @@ else if (ViewBag.IsEdit)
                         <a asp-action="DeleteFlight" asp-route-flightId="@flight.Id" class="glyphicon glyphicon-trash" title="Удалить" style="color:crimson;"></a>
                     </td>
                 </tr>
-               
             }
         </table>
     }
-    else if(ViewBag.IsInvalid)
+    else if (ViewBag != null)
     {
-        <h3>В системе отсутствуют искомые данные о рейсах. Может быть Вы имели ввиду <a asp-action="Index" asp-route-searchString="Turkish">Turkish</a>?</h3>
+        <center>
+            <h3>
+                В системе отсутствуют искомые данные о рейсах. Может быть Вы имели ввиду <a asp - action="Index" asp-route-searchString="Turkish"> Turkish</a>?
+            </h3>
+        </center>
     }
     else
     {
@@ -150,39 +157,32 @@ else if (ViewBag.IsEdit)
     }
 </div>
 
-
-
 <style>
-    .notice
-    {
-        position:fixed;
-        z-index:101;
-        width:300px;
-        height:50px;
-        margin-left:30%;
-        padding:15px 0 0 40px;
-        border-radius:12px;
+    .notice {
+        position: fixed;
+        z-index: 101;
+        width: 300px;
+        height: 50px;
+        margin-left: 30%;
+        padding: 15px 0 0 40px;
+        border-radius: 12px;
     }
 
 
-#addNotice
-    {
-        background-color:greenyellow;
+    #addNotice {
+        background-color: greenyellow;
     }
 
-#editNotice
-    {
-        background-color:yellow;
+    #editNotice {
+        background-color: yellow;
     }
 
+    input[type=submit] {
+        margin-bottom: 15px;
+    }
 
     table {
         margin-top: 40px;
-    }
-
-    input[type=submit]
-    {
-        margin-bottom:15px;
     }
 
     a {
@@ -216,12 +216,42 @@ else if (ViewBag.IsEdit)
         max-width: 100%;
     }
 
-    select[name=sortNum]
-    {
-        margin-top:10px;
+    /*.form-group {
+        margin-top: 5%;
+        margin-bottom: 10%;
+    }*/
+    .form-horizontal {
+        padding: 5%;
+        height: 50%;
     }
-</style>
+    .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group {
+    margin-right: -1px;
+    height: 34px;
+}
+    #roundBtn {
+        border-radius: 4px !important;
+    }
 
+    .input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        height: 34px;
+    }
+
+    .btn-group .btn {
+        border-radius: 0;
+        margin-left: -1px;
+        height: 34px;
+    }
+
+    input, select, textarea {
+        max-width: 100%;
+    }
+
+        select[name=sortNum] {
+            margin-top: 10px;
+        }
+</style>
 <script>
     $(document).ready(function (e) {
         $('.search-panel .dropdown-menu').find('a').click(function (e) {
@@ -254,7 +284,7 @@ else if (ViewBag.IsEdit)
 
 
 
-@if(ViewBag.SortNum != null)
+@if (ViewBag.SortNum != null)
 {
     <script>
         var sortNum = "@ViewBag.SortNum";
@@ -262,10 +292,11 @@ else if (ViewBag.IsEdit)
     </script>
 }
 
-@if(ViewBag.Checked != null)
+@if (ViewBag.Checked != null)
 {
     foreach (var item in ViewBag.Checked)
     {
+
         <script>
             var boxFlag = "@item";
             $("input[flag=" + boxFlag + "]").attr("checked", true);

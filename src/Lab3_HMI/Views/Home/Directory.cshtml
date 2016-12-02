@@ -1,0 +1,49 @@
+﻿@{ 
+    ViewData["Title"] = "Справочник";
+}
+
+
+<div style="margin-top:70px;">
+    <div class="item">
+        <button class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> Добавить рейс
+        </button>
+        <span style="font-size:16px;">- добавление информации о новом рейсе</span>
+    </div>
+    <div class="item">
+        <button class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> Добавить пассажира
+        </button>
+        <span style="font-size:16px;">- добавление информации о пассажире конкретного рейса</span>
+    </div>
+    <div class="item">
+        <span style="color:blue;" class="table-up glyphicon glyphicon-arrow-up"></span>
+        <span style="color:blue;" class="table-down glyphicon glyphicon-arrow-down"></span>
+        <span style="font-size:16px;">- перемещение записи из базы вверх/вниз</span>
+    </div>
+    <div class="item">
+        <a href="#" style="color:teal;" class="glyphicon glyphicon-user"></a>
+        <span style="font-size:16px;">- просмотр информации о пассажирах конкретного рейса</span>
+    </div>
+    <div class="item">
+        <a href="#" style="color:cornflowerblue;" class="glyphicon glyphicon-pencil"></a>
+        <span style="font-size:16px;">- редактирование соответственной информации о рейсах, пассажирах</span>
+    </div>
+    <div class="item">
+        <a href="#" class="glyphicon glyphicon-trash" style="color:red;"></a>
+        <span style="font-size:16px;">- удаление соответственной информации о рейсах, пассажирах из базы</span>
+    </div>
+    <div class="item">
+        <img src="~/images/addBaggage2.png" style="height:100px;width:70px;" />
+        <span style="font-size:16px;">- добавление единицы багажа для конкретного пассажира</span>
+    </div>
+</div>
+
+
+
+<style>
+    .item
+    {
+        margin-top:30px;
+    }
+</style>
